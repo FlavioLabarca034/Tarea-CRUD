@@ -19,6 +19,12 @@ class GestorProductos:
                 "INSERT INTO productos (nombre, precio, stock) VALUES (%s, %s, %s)",
                 (nombre, precio, stock)
             )
+
+            #Se revisa si el stock o precio ingresado es negativo
+            if(int(stock) < 0 or int(precio) < 0):
+                print("No se puede ingresar un valor negativo. Por favor ingrese otro valor.")
+                return
+
             self.conexion.commit()
             print(f"Producto '{nombre}' insertado correctamente")
         except psycopg2.Error as e:
@@ -147,7 +153,7 @@ def main():
             gestor.modificar_precio(id_producto, nuevo_precio)
  
         elif opcion == "5":
-            id_cliente = input("Id del producto a borrar: ")
+            id_producto = input("Id del producto a borrar: ")
             gestor.borrar(id_producto)
  
         elif opcion == "6":
